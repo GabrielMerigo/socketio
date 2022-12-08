@@ -4,8 +4,14 @@ const http = require("http").createServer(app);
 const io = require("socket.io")(http);
 
 io.on("connection", (socket) => {
-  console.log(socket);
-  console.log(socket.id);
+  socket.on("palavra", (data) => {
+    console.log(data);
+    socket.emit("resultado", data + "- Gabriel Lindo");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("desconectou: ", socket.id);
+  });
 });
 
 app.set("view engine", "ejs");
